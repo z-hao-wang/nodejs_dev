@@ -3,12 +3,18 @@ html
 	head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.min.css')
+		script(type='text/javascript', src='/javascript/bootstrap.min.js')
 	body
 		h1= title
-		#articles
+		ul#articles
 			- each article in articles
-				div.article
-				div.created_at= article.created_at
-				div.title 
-					a(href="/blog/"+article._id)!= article.title
-				div.body= article.body
+				li
+					div.article
+						div.created_at= article.created_at
+						div.title
+							a(href="/blog/"+article._id)!= article.title
+						div.body=article.body
+		p
+		a.btn.btn-primary(href="/blog/new")= 'New Post'

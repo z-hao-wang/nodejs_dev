@@ -16,16 +16,31 @@ h1 {
   font-size: 60px;
 }
 #articles {
+  list-style: none;
   text-align: left;
   margin-left: auto;
   margin-right: auto;
   width: 320px;
 }
+#articles li {
+  background-color: #eee;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eee 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eee));
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%, #eee 100%);
+  background-image: -ms-linear-gradient(top, #f5f5f5 0%, #eee 100%);
+  background-image: -o-linear-gradient(top, #f5f5f5 0%, #eee 100%);
+  background-image: linear-gradient(top, #f5f5f5 0%, #eee 100%);
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
 #articles .article {
   margin: 20px;
 }
 #articles .article .created_at {
-  display: none;
+  font-size: 0.8em;
 }
 #articles .article .title {
   font-weight: bold;

@@ -46,7 +46,9 @@ app.get('/new', function(req, res) {
 	
 	DBStruct.each(function(error,fobj1,fobj2){
 		if(_.isObject(fobj2)){
-			dataToSave[fobj1.fieldName][fobj2.fieldName]=req.param(fobj2.fieldName);
+			//if(!dataToSave[fobj1.fieldName])
+			//	dataToSave[fobj1.fieldName]=[];
+			//dataToSave[fobj1.fieldName][fobj2.fieldName]=req.param(fobj2.fieldName);
 		}
 		else{
 			dataToSave[fobj1.fieldName]=req.param(fobj1.fieldName);
@@ -59,5 +61,5 @@ app.get('/new', function(req, res) {
 	
     
 });
-
+console.log("listening to 8000");
 app.listen(8000);

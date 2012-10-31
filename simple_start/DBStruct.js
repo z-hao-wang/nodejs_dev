@@ -1,18 +1,18 @@
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 var _ = require('./underscore_custom')._;
 var DBStruct={};
 DBStruct.findAll=function(){
 	var _r = [
 		//{field:'id',tag:'none'},   default requird
-		{created_at:new Date,tag:'div',type:'Date'}, 
-		{title:'title',tag:'div',type:String}, 
-		{body:'body',tag:'div',type:String}, 
-		{permission:'everyone',tag:'div',type:String}, 
+		{created_at:new Date,tag:'div'}, 
+		{title:'title',tag:'div'}, 
+		{body:'body',tag:'div'}, 
+		{permission:'everyone',tag:'div'}, 
 		{comments:[ //only array allowed inside a multi dimentional thing
-			{author:'author',tag:'div',type:String},
-			{comment:'comment',tag:'div',type:String}
+			{author:'author',tag:'div'},
+			{comment:'comment',tag:'div'}
 			]
-		,tag:'div',type:Array}
+		,tag:'div'}
 		];
 	return _r;
 };

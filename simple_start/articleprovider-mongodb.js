@@ -1,13 +1,59 @@
-var DBStruct=require('./DBStruct');
 var Db = require('mongodb').Db;
 var Connection = require('mongodb').Connection;
 var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
+var Local={
+	dbName:'test',
+	mongoHost:'localhost',
+	mongoPort:27017,
+	mongoUser:'',
+	mongoPasswd:''
+}
+var MongHQ={
+	dbName:'hawkDev',
+	mongoHost:'alex.mongohq.com',
+	mongoPort:10078,
+	mongoUser:'test',
+	mongoPasswd:'mongotest'
+}
+//var Config=Local;
+var Config=MongHQ;
+ArticleProvider = function() {
+  //this.db= new Db('test', new Server(host, port, {auto_reconnect: true,safe:false}, {}));
+  this.db= new Db(Config.dbName, new Server(Config.mongoHost, Config.mongoPort, {auto_reconnect: true}, {}),{safe:false});
+  this.db.open(function(err,data){
+     if(data && Config.mongoUser != ""){
+        data.authenticate(Config.mongoUser, Config.mongoPasswd,function(err2,data2){
+             if(data2){
+                 console.log("Database opened");
+             }
+             else{
+                 console.log(err2);
+             }
+         });
+      }
+      else{
+           console.log(err);
+      }
+   });
+};
 
-ArticleProvider = function(host, port) {
-  this.db= new Db('node-mongo-blog', new Server(host, port, {auto_reconnect: true}, {}));
-  this.db.open(function(){});
+//addCommentToArticle
+
+ArticleProvider.prototype.addCommentToArticle = function(articleId, comment, callback) {
+  this.getCollection(function(error, article_collection) {
+    if( error ) callback( error );
+    else {
+      article_collection.update(
+        {_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(articleId)},
+        {"$push": {comments: comment}},
+        function(error, article){
+          if( error ) callback(error);
+          else callback(null, article)
+        });
+    }
+  });
 };
 
 //getCollection
@@ -24,9 +70,7 @@ ArticleProvider.prototype.findAll = function(callback) {
     this.getCollection(function(error, article_collection) {
       if( error ) callback(error)
       else {
-		console.log('3',article_collection.find());
         article_collection.find().toArray(function(error, results) {
-			console.log('4');
           if( error ) callback(error)
           else callback(null, results)
         });
@@ -71,4 +115,4 @@ ArticleProvider.prototype.save = function(articles, callback) {
       }
     });
 };
-
+exports.ArticleProvider=ArticleProvider;
